@@ -12,7 +12,12 @@ class ReportService {
       final response = await BaseNetwork.get('/public/statistics');
       _logger.d('Report statistics response: $response');
 
-      return ReportStatistics.fromJson(response);
+      // Ensure response is a Map for statistics
+      if (response is Map<String, dynamic>) {
+        return ReportStatistics.fromJson(response);
+      } else {
+        throw Exception('Expected object response for statistics');
+      }
     } catch (e) {
       _logger.e('Error fetching report statistics: $e');
       rethrow;

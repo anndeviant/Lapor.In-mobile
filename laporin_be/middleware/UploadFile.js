@@ -18,22 +18,85 @@ const upload = multer({
     fileSize: 10 * 1024 * 1024, // 10MB limit
   },
   fileFilter: (req, file, cb) => {
-    // Allow images and PDFs
+    // Allow images and PDFs - expanded list for mobile compatibility
     const allowedTypes = [
       "image/jpeg",
       "image/jpg",
       "image/png",
+      "image/gif",
+      "image/webp",
+      "image/bmp",
+      "image/tiff",
       "image/svg+xml",
       "application/pdf",
+      "image/x-png",
+      "image/pjpeg",
+      "application/octet-stream",
     ];
+
+    // Define allowed file extensions
+    const allowedExtensions = [
+      ".jpg",
+      ".jpeg",
+      ".png",
+      ".gif",
+      ".webp",
+      ".bmp",
+      ".tiff",
+      ".tif",
+      ".svg",
+      ".pdf",
+    ];
+
+    console.log(
+      `File upload attempt - Name: ${file.originalname}, MIME type: ${file.mimetype}`
+    );
+
+    // Get file extension
+    const fileExtension = path.extname(file.originalname).toLowerCase();
+
+    // Check MIME type first
     if (allowedTypes.includes(file.mimetype)) {
-      cb(null, true);
+      // If MIME type is application/octet-stream, validate by file extension
+      if (file.mimetype === "application/octet-stream") {
+        if (allowedExtensions.includes(fileExtension)) {
+          console.log(
+            `Accepted octet-stream file with valid extension: ${fileExtension}`
+          );
+          cb(null, true);
+        } else {
+          console.error(
+            `Rejected octet-stream file with invalid extension: ${fileExtension} for file: ${file.originalname}`
+          );
+          cb(
+            new Error(
+              `Invalid file extension: ${fileExtension}. Only image files (jpg, jpeg, png, gif, webp, bmp, tiff, svg) and PDF files are allowed.`
+            ),
+            false
+          );
+        }
+      } else {
+        // Valid MIME type
+        cb(null, true);
+      }
     } else {
-      cb(
-        new Error(
-          "Invalid file type. Only JPG, PNG, SVG, and PDF files are allowed."
-        )
-      );
+      // Invalid MIME type - check if it might be a valid file by extension
+      if (allowedExtensions.includes(fileExtension)) {
+        console.log(
+          `Accepted file with invalid MIME type but valid extension: ${file.mimetype} -> ${fileExtension}`
+        );
+        cb(null, true);
+      } else {
+        console.error(
+          `Rejected file type: ${file.mimetype} with extension: ${fileExtension} for file: ${file.originalname}`
+        );
+        cb(
+          new Error(
+            `Invalid file type: ${file.mimetype}. Only image files (JPEG, PNG, GIF, WebP, BMP, TIFF, SVG) and PDF files are allowed.`
+          ),
+          false
+        );
+      }
     }
   },
 });
