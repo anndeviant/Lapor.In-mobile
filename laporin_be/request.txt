@@ -1,0 +1,142 @@
+=== POSTMAN TESTING GUIDE FOR LAPORIN API ===
+
+## 1. CREATE REPORT WITH FILE UPLOAD
+Method: POST
+URL: http://localhost:5000/public/reports
+
+Content-Type: form-data (WAJIB menggunakan form-data untuk upload file)
+
+### FORM-DATA KEYS AND VALUES:
+
+1. title (Text)
+   Value: "Jalan Berlubang di Depan Kantor"
+
+2. description (Text)
+   Value: "Jalan di depan kantor kelurahan berlubang besar dan membahayakan pengendara motor"
+
+3. category_id (Text)
+   Value: "1"
+
+4. reporter_name (Text)
+   Value: "Ahmad Fauzi"
+
+5. reporter_contact (Text)
+   Value: "081234567890"
+
+6. location (Text)
+   Value: "Jl. Raya Ngaliyan No. 123"
+
+7. agency_id (Text) - OPTIONAL
+   Value: "1"
+
+8. image (File) - REQUIRED
+   Select file: Pilih file gambar (JPG, PNG, SVG)
+   
+9. lampiran (File) - OPTIONAL
+   Select file: Pilih file dokumen (PDF atau gambar)
+
+### RESPONSE EXAMPLE (Success):
+{
+  "msg": "Aduan berhasil dikirim",
+  "reportId": 31,
+  "trackingId": 31
+}
+
+### RESPONSE EXAMPLE (Error - Missing required field):
+{
+  "msg": "Semua field wajib harus diisi",
+  "missingFields": {
+    "title": false,
+    "description": false,
+    "category_id": false,
+    "reporter_name": true,
+    "reporter_contact": false,
+    "location": false
+  }
+}
+
+## 2. GET ALL REPORTS
+Method: GET
+URL: http://localhost:5000/public/reports
+
+No body required
+
+## 3. GET REPORT BY ID
+Method: GET
+URL: http://localhost:5000/public/reports/1
+
+No body required
+
+## 4. GET REPORTS BY CATEGORY
+Method: GET
+URL: http://localhost:5000/public/reports/category/1
+
+No body required
+
+## 5. TRACK REPORT STATUS
+Method: GET
+URL: http://localhost:5000/public/reports/track/1
+
+No body required
+
+## 6. GET REPORT STATISTICS
+Method: GET
+URL: http://localhost:5000/public/statistics
+
+No body required
+
+## 7. GET CATEGORIES
+Method: GET
+URL: http://localhost:5000/public/categories
+
+No body required
+
+## 8. GET GOVERNMENT AGENCIES
+Method: GET
+URL: http://localhost:5000/public/agencies
+
+No body required
+
+=== IMPORTANT NOTES ===
+
+1. WAJIB menggunakan form-data untuk endpoint POST /reports karena ada file upload
+2. Field 'image' adalah WAJIB (required)
+3. Field 'lampiran' adalah OPSIONAL (optional)
+4. Maksimal ukuran file: 10MB
+5. File yang diizinkan: JPG, PNG, SVG, PDF
+6. category_id dan agency_id harus berupa angka (string format)
+7. File akan disimpan di Google Cloud Storage dengan struktur folder:
+   - images/ untuk file gambar utama
+   - files/ untuk file lampiran pendukung
+
+=== CATEGORY IDS ===
+1 = Jalan Rusak
+2 = Jembatan Rusak  
+3 = Lampu Jalan Mati
+9 = Sampah Menumpuk
+12 = Fasilitas Publik Rusak
+
+=== AGENCY IDS ===
+1 = Dinas Pekerjaan Umum DIY
+2 = Dinas Lingkungan Hidup DIY
+3 = BPBD DIY
+4 = Dinas Perhubungan DIY
+5 = Dinas Sosial DIY
+
+=== TESTING STEPS ===
+
+1. Buka Postman
+2. Buat request baru dengan method POST
+3. Masukkan URL: http://localhost:5000/public/reports
+4. Pilih tab "Body"
+5. Pilih "form-data" (JANGAN pilih raw atau x-www-form-urlencoded)
+6. Tambahkan key-value sesuai dengan daftar di atas
+7. Untuk key "image" dan "lampiran", pastikan memilih type "File" bukan "Text"
+8. Klik "Send"
+
+=== TROUBLESHOOTING ===
+
+- Jika error "Invalid file type": Pastikan file yang diupload adalah JPG, PNG, SVG, atau PDF
+- Jika error "Foto bukti wajib diunggah": Pastikan field 'image' diisi dengan file
+- Jika error "Semua field wajib harus diisi": Periksa kembali field yang required
+- Jika error 500: Periksa koneksi ke Google Cloud Storage dan environment variables

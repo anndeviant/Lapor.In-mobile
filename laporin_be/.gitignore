@@ -1,0 +1,12 @@
+node_modules/
+
+# Logs
+logs/
+
+# Environment variables
+.env
+
+# IDEs
+.vscode/
+
+service_key.json
