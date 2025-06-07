@@ -74,9 +74,16 @@ class BaseNetwork {
       if (response.statusCode == 200) {
         final decodedResponse = jsonDecode(response.body);
         return decodedResponse; // Return dynamic to handle both Map and List
+      } else if (response.statusCode == 404 &&
+          endpoint.contains('/public/reports/track/')) {
+        // Special handling for tracking endpoint when no reports found
+        _logger.i('No reports found for tracking ID - returning empty list');
+        return []; // Return empty list instead of throwing error
       } else {
         final errorData = jsonDecode(response.body);
-        throw Exception(errorData['message'] ?? 'Server error');
+        throw Exception(
+          errorData['message'] ?? errorData['msg'] ?? 'Server error',
+        );
       }
     } catch (e) {
       _logger.e('Network error: $e');

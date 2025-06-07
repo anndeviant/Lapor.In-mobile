@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../services/connectivity_service.dart';
 import '../widgets/connection_popup.dart';
 import 'create_report_page.dart';
@@ -43,76 +44,88 @@ class _LaporPageState extends State<LaporPage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SingleChildScrollView(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              Text(
-                'Report an Issue',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey.shade800,
+        SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header
+                Text(
+                  'Report an Issue',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey.shade800,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                'Help us improve infrastructure by reporting issues in your area.',
-                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
-              ),
-              const SizedBox(height: 20),
+                const SizedBox(height: 6),
+                Text(
+                  'Help us improve infrastructure by reporting issues in your area.',
+                  style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                ),
+                const SizedBox(height: 20),
 
-              // Create Report Button
-              SizedBox(
-                width: double.infinity,
-                height: 100,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder:
-                            (context, animation, secondaryAnimation) =>
-                                const CreateReportPage(),
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
+                // Create Report Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Set status bar to dark (black icons/text) before navigating
+                      SystemChrome.setSystemUIOverlayStyle(
+                        const SystemUiOverlayStyle(
+                          statusBarIconBrightness:
+                              Brightness.dark, // icon hitam
+                          statusBarBrightness:
+                              Brightness.light, // background putih
+                          statusBarColor: Colors.transparent,
+                        ),
+                      );
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const CreateReportPage(),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue.shade700,
+                      foregroundColor: Colors.white,
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade700,
-                    foregroundColor: Colors.white,
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.add_circle_outline,
+                          size: 32,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(height: 4),
+                        const Text(
+                          'Create New Report',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.add_circle_outline,
-                        size: 32,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(height: 4),
-                      const Text(
-                        'Create New Report',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-              // Quick Info Cards
-              _buildInfoCards(),
-            ],
+                // Quick Info Cards
+                _buildInfoCards(),
+              ],
+            ),
           ),
         ),
         ConnectionPopup(isVisible: _showConnectionPopup),

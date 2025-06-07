@@ -50,11 +50,9 @@ class _CreateReportPageState extends State<CreateReportPage> {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark, // ikon hitam
+        statusBarBrightness: Brightness.light, // background putih
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: Colors.white,
-        systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
     _checkConnectivity();
@@ -109,12 +107,6 @@ class _CreateReportPageState extends State<CreateReportPage> {
         // Validate that image is uploaded - check the actual report data
         if (_reportData.imageFile == null ||
             !File(_reportData.imageFile!.path).existsSync()) {
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   const SnackBar(
-          //     content: Text('Photo evidence is required to proceed'),
-          //     backgroundColor: Colors.red,
-          //   ),
-          // );
           isValid = false;
         }
       }
@@ -213,105 +205,109 @@ class _CreateReportPageState extends State<CreateReportPage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              // Progress indicator
-              Container(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    CircularStepIndicator(
-                      totalSteps: _totalSteps,
-                      currentStep: _currentStep,
-                      activeColor: Colors.blue.shade700,
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Step $_currentStep of $_totalSteps',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Step content
-              Expanded(
-                child: PageView(
-                  controller: _pageController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    Step1ReportInfo(
-                      formKey: _step1FormKey,
-                      reportData: _reportData,
-                      categories: _categories,
-                      agencies: _agencies,
-                      onDataChanged: _updateReportData,
-                      onCategoriesLoaded: _onCategoriesLoaded,
-                      onAgenciesLoaded: _onAgenciesLoaded,
-                    ),
-                    Step2ReporterInfo(
-                      formKey: _step2FormKey,
-                      reportData: _reportData,
-                      onDataChanged: _updateReportData,
-                    ),
-                    Step3EvidenceUpload(
-                      reportData: _reportData,
-                      onDataChanged: _updateReportData,
-                    ),
-                    Step4Preview(
-                      reportData: _reportData,
-                      categories: _categories,
-                      agencies: _agencies,
-                      onPrevious: _previousStep,
-                    ),
-                  ],
-                ),
-              ),
-
-              // Navigation buttons (hide on step 4 as it has its own navigation buttons)
-              if (_currentStep < _totalSteps)
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                // Progress indicator
                 Container(
-                  padding: const EdgeInsets.all(12),
-                  child: Row(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
                     children: [
-                      if (_currentStep > 1)
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: _previousStep,
-                            style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              side: BorderSide(color: Colors.grey.shade400),
-                            ),
-                            child: const Text('Previous'),
-                          ),
-                        ),
-                      if (_currentStep > 1) const SizedBox(width: 12),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: _nextStep,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue.shade700,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                          ),
-                          child: const Text(
-                            'Next',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                      CircularStepIndicator(
+                        totalSteps: _totalSteps,
+                        currentStep: _currentStep,
+                        activeColor: Colors.blue.shade700,
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Step $_currentStep of $_totalSteps',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
                         ),
                       ),
                     ],
                   ),
                 ),
-            ],
-          ),
-          ConnectionPopup(isVisible: _showConnectionPopup),
-        ],
+
+                // Step content
+                Expanded(
+                  child: PageView(
+                    controller: _pageController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      Step1ReportInfo(
+                        formKey: _step1FormKey,
+                        reportData: _reportData,
+                        categories: _categories,
+                        agencies: _agencies,
+                        onDataChanged: _updateReportData,
+                        onCategoriesLoaded: _onCategoriesLoaded,
+                        onAgenciesLoaded: _onAgenciesLoaded,
+                      ),
+                      Step2ReporterInfo(
+                        formKey: _step2FormKey,
+                        reportData: _reportData,
+                        onDataChanged: _updateReportData,
+                      ),
+                      Step3EvidenceUpload(
+                        reportData: _reportData,
+                        onDataChanged: _updateReportData,
+                      ),
+                      Step4Preview(
+                        reportData: _reportData,
+                        categories: _categories,
+                        agencies: _agencies,
+                        onPrevious: _previousStep,
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Navigation buttons (hide on step 4 as it has its own navigation buttons)
+                if (_currentStep < _totalSteps)
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        if (_currentStep > 1)
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: _previousStep,
+                              style: OutlinedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
+                                side: BorderSide(color: Colors.grey.shade400),
+                              ),
+                              child: const Text('Previous'),
+                            ),
+                          ),
+                        if (_currentStep > 1) const SizedBox(width: 12),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: _nextStep,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue.shade700,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                            ),
+                            child: const Text(
+                              'Next',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+            ConnectionPopup(isVisible: _showConnectionPopup),
+          ],
+        ),
       ),
     );
   }

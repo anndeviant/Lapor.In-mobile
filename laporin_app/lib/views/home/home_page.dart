@@ -280,7 +280,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildStatusItem(StatusStat status) {
     // Define colors for each status
     final statusColors = {
-      'pending': Colors.amber,
+      'pending': Colors.grey,
       'verified': Colors.blue,
       'in_progress': Colors.orange,
       'resolved': Colors.green,

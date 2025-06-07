@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'report_category.dart';
+import 'government_agency.dart';
 
 class Report {
   final int? id;
@@ -37,17 +39,17 @@ class Report {
 
   factory Report.fromJson(Map<String, dynamic> json) {
     return Report(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-      categoryId: json['category_id'],
-      reporterName: json['reporter_name'],
-      reporterContact: json['reporter_contact'],
-      location: json['location'],
-      status: json['status'],
-      agencyId: json['agency_id'],
-      imageUrl: json['image_url'],
-      attachmentUrl: json['lampiran_url'],
+      id: json['id'] as int?,
+      title: json['title'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      categoryId: json['category_id'] as int? ?? 0,
+      reporterName: json['reporter_name'] as String? ?? '',
+      reporterContact: json['reporter_contact'] as String? ?? '',
+      location: json['location'] as String? ?? '',
+      status: json['status'] as String?,
+      agencyId: json['agency_id'] as int?,
+      imageUrl: json['image_url'] as String?,
+      attachmentUrl: json['lampiran_url'] as String?,
       createdAt:
           json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt:
@@ -92,6 +94,57 @@ class Report {
       imageFile: clearImageFile ? null : (imageFile ?? this.imageFile),
       attachmentFile:
           clearAttachmentFile ? null : (attachmentFile ?? this.attachmentFile),
+    );
+  }
+}
+
+class DetailedReport extends Report {
+  final ReportCategory? category;
+  final GovernmentAgency? agency;
+
+  DetailedReport({
+    required super.id,
+    required super.title,
+    required super.description,
+    required super.categoryId,
+    required super.reporterName,
+    required super.reporterContact,
+    required super.location,
+    super.status,
+    super.agencyId,
+    super.imageUrl,
+    super.attachmentUrl,
+    super.createdAt,
+    super.updatedAt,
+    this.category,
+    this.agency,
+  });
+
+  factory DetailedReport.fromJson(Map<String, dynamic> json) {
+    return DetailedReport(
+      id: json['id'] as int?,
+      title: json['title'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      categoryId: json['category_id'] as int? ?? 0,
+      reporterName: json['reporter_name'] as String? ?? '',
+      reporterContact: json['reporter_contact'] as String? ?? '',
+      location: json['location'] as String? ?? '',
+      status: json['status'] as String?,
+      agencyId: json['agency_id'] as int?,
+      imageUrl: json['image_url'] as String?,
+      attachmentUrl: json['lampiran_url'] as String?,
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      updatedAt:
+          json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      category:
+          json['report_category'] != null
+              ? ReportCategory.fromJson(json['report_category'])
+              : null,
+      agency:
+          json['government_agency'] != null
+              ? GovernmentAgency.fromJson(json['government_agency'])
+              : null,
     );
   }
 }

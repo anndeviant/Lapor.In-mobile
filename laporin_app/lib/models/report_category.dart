@@ -13,10 +13,10 @@ class ReportCategory {
 
   factory ReportCategory.fromJson(Map<String, dynamic> json) {
     return ReportCategory(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'] ?? '',
-      iconUrl: json['icon_url'] ?? '',
+      id: json['id'] as int? ?? 0,
+      name: json['name'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      iconUrl: json['icon_url'] as String? ?? '',
     );
   }
 }

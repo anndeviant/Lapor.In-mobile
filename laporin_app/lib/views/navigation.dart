@@ -23,6 +23,13 @@ class _NavigationPageState extends State<NavigationPage> {
     const NotificationPage(),
   ];
 
+  final List<String> _pageTitles = [
+    'Lapor.In',
+    'Lapor.In',
+    'Riwayat Laporan',
+    'Lapor.In',
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -43,9 +50,12 @@ class _NavigationPageState extends State<NavigationPage> {
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
           statusBarColor: Colors.transparent,
         ),
-        title: const Text(
-          'Lapor.In',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        title: Text(
+          _pageTitles[_currentIndex],
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         actions: [
           IconButton(

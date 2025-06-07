@@ -141,98 +141,100 @@ class _Step1ReportInfoState extends State<Step1ReportInfo> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(12),
-      child: Form(
-        key: widget.formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Report Information',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey.shade800,
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Form(
+          key: widget.formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Report Information',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade800,
+                ),
               ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              'Provide details about the issue you want to report.',
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
-            ),
-            const SizedBox(height: 16),
-
-            // Title Field
-            _buildTextField(
-              controller: _titleController,
-              label: 'Report Title *',
-              hint: 'Brief description of the issue',
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a title';
-                }
-                return null;
-              },
-              onChanged: (value) => _updateData(),
-            ),
-            const SizedBox(height: 12),
-
-            // Category Dropdown
-            _buildDropdown<ReportCategory>(
-              label: 'Category *',
-              value: _selectedCategory,
-              items: widget.categories,
-              itemBuilder: (category) => category.name,
-              validator: (value) {
-                if (value == null) {
-                  return 'Please select a category';
-                }
-                return null;
-              },
-              onChanged: (category) {
-                setState(() {
-                  _selectedCategory = category;
-                });
-                _updateData();
-              },
-            ),
-            const SizedBox(height: 12),
-
-            // Description Field
-            _buildTextField(
-              controller: _descriptionController,
-              label: 'Description *',
-              hint: 'Detailed description of the issue',
-              maxLines: 3,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a description';
-                }
-                return null;
-              },
-              onChanged: (value) => _updateData(),
-            ),
-            const SizedBox(height: 12),
-
-            // Location Field with Map Picker
-            _buildLocationField(),
-            const SizedBox(height: 12),
-
-            // Agency Dropdown (Optional)
-            _buildDropdown<GovernmentAgency>(
-              label: 'Target Agency (Optional)',
-              value: _selectedAgency,
-              items: widget.agencies,
-              itemBuilder: (agency) => agency.name,
-              onChanged: (agency) {
-                setState(() {
-                  _selectedAgency = agency;
-                });
-                _updateData();
-              },
-            ),
-          ],
+              const SizedBox(height: 6),
+              Text(
+                'Provide details about the issue you want to report.',
+                style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+              ),
+              const SizedBox(height: 16),
+      
+              // Title Field
+              _buildTextField(
+                controller: _titleController,
+                label: 'Report Title *',
+                hint: 'Brief description of the issue',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+                onChanged: (value) => _updateData(),
+              ),
+              const SizedBox(height: 12),
+      
+              // Category Dropdown
+              _buildDropdown<ReportCategory>(
+                label: 'Category *',
+                value: _selectedCategory,
+                items: widget.categories,
+                itemBuilder: (category) => category.name,
+                validator: (value) {
+                  if (value == null) {
+                    return 'Please select a category';
+                  }
+                  return null;
+                },
+                onChanged: (category) {
+                  setState(() {
+                    _selectedCategory = category;
+                  });
+                  _updateData();
+                },
+              ),
+              const SizedBox(height: 12),
+      
+              // Description Field
+              _buildTextField(
+                controller: _descriptionController,
+                label: 'Description *',
+                hint: 'Detailed description of the issue',
+                maxLines: 3,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+                onChanged: (value) => _updateData(),
+              ),
+              const SizedBox(height: 12),
+      
+              // Location Field with Map Picker
+              _buildLocationField(),
+              const SizedBox(height: 12),
+      
+              // Agency Dropdown (Optional)
+              _buildDropdown<GovernmentAgency>(
+                label: 'Target Agency (Optional)',
+                value: _selectedAgency,
+                items: widget.agencies,
+                itemBuilder: (agency) => agency.name,
+                onChanged: (agency) {
+                  setState(() {
+                    _selectedAgency = agency;
+                  });
+                  _updateData();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

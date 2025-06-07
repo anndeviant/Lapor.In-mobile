@@ -43,9 +43,7 @@ class _Step4PreviewState extends State<Step4Preview> {
     });
 
     try {
-      final response = await ReportSubmissionService.submitReport(
-        widget.reportData,
-      );
+      await ReportSubmissionService.submitReport(widget.reportData);
 
       // Clear draft after successful submission
       await ReportStorage.clearDraft();
@@ -56,60 +54,73 @@ class _Step4PreviewState extends State<Step4Preview> {
           context: context,
           barrierDismissible: false,
           builder:
-              (context) => AlertDialog(
-                icon: Icon(
-                  Icons.check_circle,
-                  color: Colors.green.shade700,
-                  size: 64,
+              (context) => Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                title: const Text('Report Submitted!'),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('Your report has been submitted successfully.'),
-                    const SizedBox(height: 16),
-                    if (response['trackingId'] != null)
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.blue.shade50,
-                          borderRadius: BorderRadius.circular(8),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 32,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.check_circle_rounded,
+                        color: Colors.green.shade600,
+                        size: 56,
+                      ),
+                      const SizedBox(height: 18),
+                      Text(
+                        'Report Submitted',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green.shade700,
                         ),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Tracking ID',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.blue.shade700,
-                                fontWeight: FontWeight.w500,
-                              ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Your report has been sent successfully.',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade700,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close dialog
+                            Navigator.of(
+                              context,
+                            ).popUntil((route) => route.isFirst);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green.shade700,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 13),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            Text(
-                              response['trackingId'].toString(),
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue.shade700,
-                              ),
+                            elevation: 0,
+                          ),
+                          child: const Text(
+                            'OK',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                  ],
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      // Close dialog and go back to main page
-                      Navigator.of(context).pop(); // Close dialog
-                      Navigator.of(context).popUntil(
-                        (route) => route.isFirst,
-                      ); // Go back to main page
-                    },
-                    child: const Text('OK'),
+                    ],
                   ),
-                ],
+                ),
               ),
         );
       }
@@ -151,118 +162,120 @@ class _Step4PreviewState extends State<Step4Preview> {
             )
             : null;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Review & Submit',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey.shade800,
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Review & Submit',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade800,
+              ),
             ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Please review your report before submitting.',
-            style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
-          ),
-          const SizedBox(height: 16),
+            const SizedBox(height: 6),
+            Text(
+              'Please review your report before submitting.',
+              style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+            ),
+            const SizedBox(height: 16),
 
-          // Report Information Card
-          _buildSectionCard(
-            title: 'Report Information',
-            icon: Icons.report_outlined,
-            children: [
-              _buildInfoRow('Title', widget.reportData.title),
-              _buildInfoRow('Category', category.name),
-              _buildInfoRow('Desc', widget.reportData.description),
-              _buildInfoRow('Location', widget.reportData.location),
-              if (agency != null) _buildInfoRow('Agency', agency.name),
-            ],
-          ),
-          const SizedBox(height: 12),
+            // Report Information Card
+            _buildSectionCard(
+              title: 'Report Information',
+              icon: Icons.report_outlined,
+              children: [
+                _buildInfoRow('Title', widget.reportData.title),
+                _buildInfoRow('Category', category.name),
+                _buildInfoRow('Desc', widget.reportData.description),
+                _buildInfoRow('Location', widget.reportData.location),
+                if (agency != null) _buildInfoRow('Agency', agency.name),
+              ],
+            ),
+            const SizedBox(height: 12),
 
-          // Reporter Information Card
-          _buildSectionCard(
-            title: 'Reporter Information',
-            icon: Icons.person_outlined,
-            children: [
-              _buildInfoRow('Name', widget.reportData.reporterName),
-              _buildInfoRow('Phone', widget.reportData.reporterContact),
-            ],
-          ),
-          const SizedBox(height: 12),
+            // Reporter Information Card
+            _buildSectionCard(
+              title: 'Reporter Information',
+              icon: Icons.person_outlined,
+              children: [
+                _buildInfoRow('Name', widget.reportData.reporterName),
+                _buildInfoRow('Phone', widget.reportData.reporterContact),
+              ],
+            ),
+            const SizedBox(height: 12),
 
-          // Evidence Card
-          _buildSectionCard(
-            title: 'Evidence',
-            icon: Icons.camera_alt_outlined,
-            children: [
-              if (widget.reportData.imageFile != null)
-                _buildImagePreview(
-                  'Photo Evidence',
-                  widget.reportData.imageFile!,
-                ),
-              if (widget.reportData.attachmentFile != null)
-                _buildImagePreview(
-                  'Additional Attachment',
-                  widget.reportData.attachmentFile!,
-                ),
-            ],
-          ),
-          const SizedBox(height: 16),
-
-          // Navigation buttons (Previous and Submit)
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: _isSubmitting ? null : widget.onPrevious,
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    side: BorderSide(color: Colors.grey.shade400),
+            // Evidence Card
+            _buildSectionCard(
+              title: 'Evidence',
+              icon: Icons.camera_alt_outlined,
+              children: [
+                if (widget.reportData.imageFile != null)
+                  _buildImagePreview(
+                    'Photo Evidence',
+                    widget.reportData.imageFile!,
                   ),
-                  child: const Text('Previous'),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: _isSubmitting ? null : _submitReport,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade700,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+                if (widget.reportData.attachmentFile != null)
+                  _buildImagePreview(
+                    'Additional Attachment',
+                    widget.reportData.attachmentFile!,
                   ),
-                  child:
-                      _isSubmitting
-                          ? const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 18,
-                                height: 18,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // Navigation buttons (Previous and Submit)
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: _isSubmitting ? null : widget.onPrevious,
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      side: BorderSide(color: Colors.grey.shade400),
+                    ),
+                    child: const Text('Previous'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _isSubmitting ? null : _submitReport,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green.shade700,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    child:
+                        _isSubmitting
+                            ? const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 18,
+                                  height: 18,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(width: 10),
-                              Text('Submitting...'),
-                            ],
-                          )
-                          : const Text(
-                            'Submit Report',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                                SizedBox(width: 10),
+                                Text('Submitting...'),
+                              ],
+                            )
+                            : const Text(
+                              'Submit Report',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -272,18 +285,38 @@ class _Step4PreviewState extends State<Step4Preview> {
     required IconData icon,
     required List<Widget> children,
   }) {
-    return Card(
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.grey.withValues(alpha: 0.13)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.07),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      margin: const EdgeInsets.only(bottom: 8),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(icon, color: Colors.blue.shade700, size: 20),
-                const SizedBox(width: 6),
+                Container(
+                  height: 28,
+                  width: 28,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withValues(alpha: 0.13),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, color: Colors.blue.shade700, size: 16),
+                ),
+                const SizedBox(width: 10),
                 Text(
                   title,
                   style: TextStyle(
@@ -306,7 +339,7 @@ class _Step4PreviewState extends State<Step4Preview> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
             width: 75,
@@ -320,10 +353,12 @@ class _Step4PreviewState extends State<Step4Preview> {
             ),
           ),
           const Text(': ', style: TextStyle(fontSize: 13)),
-          Expanded(
+          Flexible(
             child: Text(
               value,
               style: TextStyle(fontSize: 13, color: Colors.grey.shade800),
+              softWrap: true,
+              overflow: TextOverflow.visible,
             ),
           ),
         ],

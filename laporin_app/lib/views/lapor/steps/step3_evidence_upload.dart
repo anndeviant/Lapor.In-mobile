@@ -200,31 +200,31 @@ class _Step3EvidenceUploadState extends State<Step3EvidenceUpload> {
     );
   }
 
-  Future<void> _pickAttachment() async {
-    setState(() {
-      _isLoading = true;
-    });
+  // Future<void> _pickAttachment() async {
+  //   setState(() {
+  //     _isLoading = true;
+  //   });
 
-    try {
-      final XFile? file = await _picker.pickImage(
-        source: ImageSource.gallery,
-        imageQuality: 80,
-      );
+  //   try {
+  //     final XFile? file = await _picker.pickImage(
+  //       source: ImageSource.gallery,
+  //       imageQuality: 80,
+  //     );
 
-      if (file != null) {
-        setState(() {
-          _attachmentFile = File(file.path);
-        });
-        _updateData();
-      }
-    } catch (e) {
-      // Remove the SnackBar error handling
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
+  //     if (file != null) {
+  //       setState(() {
+  //         _attachmentFile = File(file.path);
+  //       });
+  //       _updateData();
+  //     }
+  //   } catch (e) {
+  //     // Remove the SnackBar error handling
+  //   } finally {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
 
   void _updateData() {
     final updatedReport = widget.reportData.copyWith(
@@ -246,47 +246,49 @@ class _Step3EvidenceUploadState extends State<Step3EvidenceUpload> {
     widget.onDataChanged(updatedReport);
   }
 
-  void _removeAttachment() {
-    setState(() {
-      _attachmentFile = null;
-    });
-    // Update report data to ensure the file is completely removed
-    final updatedReport = widget.reportData.copyWith(
-      attachmentFile: null,
-      clearAttachmentFile: true, // Add flag to indicate explicit removal
-    );
-    widget.onDataChanged(updatedReport);
-  }
+  // void _removeAttachment() {
+  //   setState(() {
+  //     _attachmentFile = null;
+  //   });
+  //   // Update report data to ensure the file is completely removed
+  //   final updatedReport = widget.reportData.copyWith(
+  //     attachmentFile: null,
+  //     clearAttachmentFile: true, // Add flag to indicate explicit removal
+  //   );
+  //   widget.onDataChanged(updatedReport);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Evidence Upload',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey.shade800,
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Evidence Upload',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade800,
+              ),
             ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Take a photo of the issue to provide evidence.',
-            style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
-          ),
-          const SizedBox(height: 16),
+            const SizedBox(height: 6),
+            Text(
+              'Take a photo of the issue to provide evidence.',
+              style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+            ),
+            const SizedBox(height: 16),
 
-          // Required Photo Section
-          _buildPhotoSection(),
-          const SizedBox(height: 16),
+            // Required Photo Section
+            _buildPhotoSection(),
+            const SizedBox(height: 16),
 
-          // Optional Attachment Section
-          _buildAttachmentSection(),
-        ],
+            // Optional Attachment Section
+            // _buildAttachmentSection(),
+          ],
+        ),
       ),
     );
   }
@@ -419,87 +421,87 @@ class _Step3EvidenceUploadState extends State<Step3EvidenceUpload> {
     );
   }
 
-  Widget _buildAttachmentSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              'Additional Attachment (Optional)',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey.shade800,
-              ),
-            ),
-            const SizedBox(width: 6),
-            Icon(Icons.attach_file, color: Colors.blue.shade700, size: 18),
-          ],
-        ),
-        const SizedBox(height: 6),
-        Text(
-          'Upload additional documents if needed',
-          style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
-        ),
-        const SizedBox(height: 10),
+  // Widget _buildAttachmentSection() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Row(
+  //         children: [
+  //           Text(
+  //             'Additional Attachment (Optional)',
+  //             style: TextStyle(
+  //               fontSize: 15,
+  //               fontWeight: FontWeight.w500,
+  //               color: Colors.grey.shade800,
+  //             ),
+  //           ),
+  //           const SizedBox(width: 6),
+  //           Icon(Icons.attach_file, color: Colors.blue.shade700, size: 18),
+  //         ],
+  //       ),
+  //       const SizedBox(height: 6),
+  //       Text(
+  //         'Upload additional documents if needed',
+  //         style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+  //       ),
+  //       const SizedBox(height: 10),
 
-        if (_attachmentFile == null)
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton.icon(
-              onPressed: _isLoading ? null : _pickAttachment,
-              icon: Icon(
-                Icons.upload_file,
-                color: Colors.blue.shade700,
-                size: 18,
-              ),
-              label: Text(
-                'Upload File',
-                style: TextStyle(color: Colors.blue.shade700, fontSize: 14),
-              ),
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                side: BorderSide(color: Colors.blue.shade700),
-              ),
-            ),
-          )
-        else
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.blue.shade50,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.blue.shade200),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.insert_drive_file,
-                  color: Colors.blue.shade700,
-                  size: 20,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    _attachmentFile!.path.split('/').last,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.blue.shade700,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: _removeAttachment,
-                  icon: Icon(Icons.close, color: Colors.red.shade600, size: 18),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                ),
-              ],
-            ),
-          ),
-      ],
-    );
-  }
+  //       if (_attachmentFile == null)
+  //         SizedBox(
+  //           width: double.infinity,
+  //           child: OutlinedButton.icon(
+  //             onPressed: _isLoading ? null : _pickAttachment,
+  //             icon: Icon(
+  //               Icons.upload_file,
+  //               color: Colors.blue.shade700,
+  //               size: 18,
+  //             ),
+  //             label: Text(
+  //               'Upload File',
+  //               style: TextStyle(color: Colors.blue.shade700, fontSize: 14),
+  //             ),
+  //             style: OutlinedButton.styleFrom(
+  //               padding: const EdgeInsets.symmetric(vertical: 12),
+  //               side: BorderSide(color: Colors.blue.shade700),
+  //             ),
+  //           ),
+  //         )
+  //       else
+  //         Container(
+  //           padding: const EdgeInsets.all(12),
+  //           decoration: BoxDecoration(
+  //             color: Colors.blue.shade50,
+  //             borderRadius: BorderRadius.circular(12),
+  //             border: Border.all(color: Colors.blue.shade200),
+  //           ),
+  //           child: Row(
+  //             children: [
+  //               Icon(
+  //                 Icons.insert_drive_file,
+  //                 color: Colors.blue.shade700,
+  //                 size: 20,
+  //               ),
+  //               const SizedBox(width: 10),
+  //               Expanded(
+  //                 child: Text(
+  //                   _attachmentFile!.path.split('/').last,
+  //                   style: TextStyle(
+  //                     fontWeight: FontWeight.w500,
+  //                     color: Colors.blue.shade700,
+  //                     fontSize: 14,
+  //                   ),
+  //                 ),
+  //               ),
+  //               IconButton(
+  //                 onPressed: _removeAttachment,
+  //                 icon: Icon(Icons.close, color: Colors.red.shade600, size: 18),
+  //                 padding: EdgeInsets.zero,
+  //                 constraints: const BoxConstraints(),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //     ],
+  //   );
+  // }
 }

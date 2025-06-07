@@ -18,7 +18,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    // Consistent transparent status bar
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
     );
@@ -45,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder:
           (context) => AlertDialog(
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.zero, // Square corners
+              borderRadius: BorderRadius.zero,
             ),
             title: const Text('Logout'),
             content: const Text('Are you sure to logout?'),
@@ -68,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         backgroundColor: Colors.red.shade600,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero, // Square corners
+                          borderRadius: BorderRadius.zero,
                         ),
                       ),
                       child: const Text(
@@ -105,6 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
         title: const Text('Profile'),
         centerTitle: true,
@@ -129,101 +129,104 @@ class _ProfilePageState extends State<ProfilePage> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          _buildProfileHeader(),
-          const SizedBox(height: 20),
-          _buildProfileInfoCard(),
-          const SizedBox(height: 20),
-          _buildActionButtons(),
+          _buildProfileHeaderCard(),
           const SizedBox(height: 16),
+          _buildProfileInfoCard(),
+          const SizedBox(height: 16),
+          _buildActionButtons(),
         ],
       ),
     );
   }
 
-  Widget _buildProfileHeader() {
-    return SizedBox(
-      width: double.infinity,
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
-            children: [
-              // Avatar section
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blue.withValues(alpha: 0.3),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
+  Widget _buildProfileHeaderCard() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.blue.shade700.withValues(alpha: 0.10)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.07),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 36,
+              backgroundColor: Colors.blue.shade100,
+              child: Icon(Icons.person, size: 36, color: Colors.blue.shade600),
+            ),
+            const SizedBox(width: 18),
+            if (_currentUser != null)
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _currentUser!.fullname,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF222B45),
+                        letterSpacing: 0.1,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ],
-                ),
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.blue.shade100,
-                  child: Icon(
-                    Icons.person,
-                    size: 40,
-                    color: Colors.blue.shade600,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              // Profile info section
-              if (_currentUser != null)
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _currentUser!.fullname,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        _currentUser!.phoneNumber,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.blue.shade400,
-                              Colors.blue.shade600,
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          'User ID: ${_currentUser!.id}',
-                          style: const TextStyle(
-                            color: Colors.white,
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Text(
+                          'Phone: ${_currentUser!.phoneNumber}',
+                          style: TextStyle(
                             fontSize: 12,
+                            color: Colors.grey.shade600,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
                       ),
-                    ],
-                  ),
+                      decoration: BoxDecoration(
+                        color: Colors.green.shade50,
+                        borderRadius: BorderRadius.circular(7),
+                        border: Border.all(color: Colors.green.shade200),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.track_changes_outlined,
+                            size: 13,
+                            color: Colors.green.shade700,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Tracking ID: ${_currentUser!.phoneNumber}',
+                            style: TextStyle(
+                              color: Colors.green.shade700,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-            ],
-          ),
+              ),
+          ],
         ),
       ),
     );
@@ -231,11 +234,21 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildProfileInfoCard() {
     if (_currentUser == null) {
-      return Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      return Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: Colors.grey.shade200),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withValues(alpha: 0.07),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
               Icon(Icons.error_outline, size: 48, color: Colors.grey.shade400),
@@ -250,19 +263,30 @@ class _ProfilePageState extends State<ProfilePage> {
       );
     }
 
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.07),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Profile Information',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.blue.shade700,
+                fontSize: 16,
               ),
             ),
             const Divider(height: 24),
@@ -271,20 +295,26 @@ class _ProfilePageState extends State<ProfilePage> {
               label: 'Full Name',
               value: _currentUser!.fullname,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             _buildInfoRow(
               icon: Icons.phone_outlined,
               label: 'Phone Number',
               value: _currentUser!.phoneNumber,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             _buildInfoRow(
               icon: Icons.badge_outlined,
               label: 'User ID',
               value: _currentUser!.id?.toString() ?? 'N/A',
             ),
+            const SizedBox(height: 12),
+            _buildInfoRow(
+              icon: Icons.track_changes_outlined,
+              label: 'Tracking ID',
+              value: _currentUser!.phoneNumber,
+            ),
             if (_currentUser!.deviceInfo != null) ...[
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               _buildInfoRow(
                 icon: Icons.devices_outlined,
                 label: 'Device Info',
@@ -311,7 +341,7 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Colors.blue.shade50,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(icon, size: 20, color: Colors.blue.shade600),
+          child: Icon(icon, size: 18, color: Colors.blue.shade600),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -330,7 +360,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Text(
                 value,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -342,25 +372,36 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildActionButtons() {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.07),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
               'Actions',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
             ElevatedButton.icon(
               onPressed: _logout,
               icon: const Icon(Icons.logout, color: Colors.white),
               label: const Text(
                 'Logout',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
