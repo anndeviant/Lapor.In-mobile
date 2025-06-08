@@ -86,4 +86,70 @@ class ReportService {
       rethrow;
     }
   }
+
+  // Add this new method for searching public reports
+  static Future<List<PublicReport>> searchPublicReports(
+    String query, {
+    String? category,
+    String? status,
+    int limit = 20,
+    int offset = 0,
+  }) async {
+    _logger.i('Searching public reports with query: $query');
+
+    if (query.trim().length < 2) {
+      throw Exception('Query pencarian minimal 2 karakter');
+    }
+
+    try {
+      // Build query string manually
+      String queryString = 'q=${Uri.encodeQueryComponent(query.trim())}';
+      queryString += '&limit=$limit&offset=$offset';
+
+      if (category != null && category.isNotEmpty) {
+        queryString += '&category=${Uri.encodeQueryComponent(category)}';
+      }
+
+      if (status != null && status.isNotEmpty) {
+        queryString += '&status=${Uri.encodeQueryComponent(status)}';
+      }
+
+      final endpoint = '/public/reports/search?$queryString';
+      final response = await BaseNetwork.get(endpoint);
+      _logger.d('Search response: $response');
+
+      if (response is List) {
+        List<PublicReport> reports = [];
+        for (var json in response) {
+          try {
+            if (json is Map<String, dynamic>) {
+              _logger.d('Parsing public report JSON: $json');
+              reports.add(PublicReport.fromJson(json));
+            }
+          } catch (e) {
+            _logger.e('Error parsing individual public report: $e');
+            _logger.e('Problematic JSON: $json');
+            // Continue processing other reports instead of failing completely
+          }
+        }
+        _logger.i('Successfully parsed ${reports.length} public reports');
+        return reports;
+      } else {
+        _logger.w(
+          'Unexpected response type for search results, returning empty list',
+        );
+        return [];
+      }
+    } catch (e) {
+      _logger.e('Error searching public reports: $e');
+      // If it's a "no reports found" case, return empty list instead of throwing
+      if (e.toString().contains('Tidak ada aduan ditemukan') ||
+          e.toString().contains('404') ||
+          e.toString().contains('No reports found')) {
+        _logger.i('No reports found for search query, returning empty list');
+        return [];
+      }
+      rethrow;
+    }
+  }
 }

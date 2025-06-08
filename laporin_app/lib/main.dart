@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'models/user_credit.dart';
+import 'utils/hive_box.dart';
+import 'services/currency_service.dart';
 import 'views/auth_wrapper.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Hive
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserCreditAdapter());
+  await Hive.openBox<UserCredit>(HiveBox.userCredits);
+
+  // Initialize currency exchange rates
+  await CurrencyService.updateExchangeRates();
 
   // Set transparent status bar globally
   SystemChrome.setSystemUIOverlayStyle(

@@ -174,6 +174,42 @@ Response: [
                                 </div>
                             </div>
 
+                            <!-- Search Reports -->
+                            <div class="card endpoint-card method-get">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="badge bg-success method-badge me-2">GET</span>
+                                        <code>/public/reports/search</code>
+                                    </div>
+                                    <p class="mb-2">Mencari laporan berdasarkan judul, deskripsi, atau lokasi (case-insensitive)</p>
+                                    <strong>Query Parameters:</strong>
+                                    <div class="code-block">
+{
+  "q": "string (required, min 2 chars)",
+  "category": "integer (optional)",
+  "status": "string (optional: pending, verified, in_progress, resolved)",
+  "limit": "integer (optional, default: 20)",
+  "offset": "integer (optional, default: 0)"
+}
+                                    </div>
+                                    <strong>Response:</strong>
+                                    <div class="code-block">
+[
+  {
+    "id": 1,
+    "title": "Jalan Rusak di Jl. Sudirman",
+    "description": "Jalan berlubang besar di depan...",
+    "location": "Jl. Sudirman No. 123",
+    "status": "pending",
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "category_id": 1,
+    "ReportCategory": { "name": "Jalan" }
+  }
+]
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Create Report -->
                             <div class="card endpoint-card method-post">
                                 <div class="card-body">

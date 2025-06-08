@@ -521,3 +521,76 @@ export const rejectReport = async (req, res) => {
     res.status(500).json({ msg: "Terjadi kesalahan saat menolak aduan" });
   }
 };
+
+// Add this new function for public search
+export const searchPublicReports = async (req, res) => {
+  try {
+    const { q, category, status, limit = 20, offset = 0 } = req.query;
+
+    if (!q || q.trim().length < 2) {
+      return res.status(400).json({
+        msg: "Query pencarian minimal 2 karakter",
+      });
+    }
+
+    const searchTerm = q.trim().toLowerCase();
+
+    const whereClause = {
+      [Op.and]: [
+        {
+          [Op.or]: [
+            { title: { [Op.like]: `%${searchTerm}%` } },
+            { description: { [Op.like]: `%${searchTerm}%` } },
+            { location: { [Op.like]: `%${searchTerm}%` } },
+            {
+              "$report_category.name$": { [Op.like]: `%${searchTerm}%` },
+            },
+          ],
+        },
+      ],
+    };
+
+    // Add category filter if provided
+    if (category) {
+      whereClause[Op.and].push({ category_id: category });
+    }
+
+    // Add status filter if provided, default to public statuses
+    const allowedStatuses = ["pending", "verified", "in_progress", "resolved"];
+    if (status && allowedStatuses.includes(status)) {
+      whereClause[Op.and].push({ status: status });
+    } else {
+      whereClause[Op.and].push({ status: { [Op.in]: allowedStatuses } });
+    }
+
+    const response = await Report.findAll({
+      where: whereClause,
+      attributes: [
+        "id",
+        "title",
+        "description",
+        "location",
+        "status",
+        "createdAt",
+        "category_id",
+        "image_url",
+      ],
+      include: [
+        {
+          model: ReportCategory,
+          attributes: ["name"],
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+      limit: parseInt(limit),
+      offset: parseInt(offset),
+    });
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      msg: "Terjadi kesalahan saat mencari laporan",
+    });
+  }
+};

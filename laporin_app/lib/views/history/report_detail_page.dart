@@ -296,30 +296,34 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
         crossAxisAlignment:
             CrossAxisAlignment.center, // Align icon and text vertically center
         children: [
-          Container(
-            height: 28, // Ensure consistent height for vertical alignment
-            width: 28,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.grey.withValues(alpha: 0.13),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, size: 14, color: Colors.blueGrey.shade400),
-          ),
-          const SizedBox(width: 10),
-          SizedBox(
-            width: 80,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                label,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.grey.shade600,
-                  fontWeight: FontWeight.w500,
+          Row(
+            children: [
+              Container(
+                height: 28, // Ensure consistent height for vertical alignment
+                width: 28,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withValues(alpha: 0.13),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(icon, size: 14, color: Colors.blueGrey.shade400),
+              ),
+              const SizedBox(width: 10),
+              SizedBox(
+                width: 80,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey.shade600,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
           const Text(': ', style: TextStyle(fontSize: 13)),
           Flexible(

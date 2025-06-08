@@ -24,10 +24,10 @@ class _NavigationPageState extends State<NavigationPage> {
   ];
 
   final List<String> _pageTitles = [
-    'Lapor.In',
+    'Lapor Infrastruktur',
     'Lapor.In',
     'Riwayat Laporan',
-    'Lapor.In',
+    'Notification',
   ];
 
   @override

@@ -7,6 +7,7 @@ import {
   getPublicReportsByStatus,
   trackReportStatus,
   getReportStatistics,
+  searchPublicReports, // Add this new function
 } from "../controllers/ReportController.js";
 import { getReportCategories } from "../controllers/CategoryController.js";
 import { getGovernmentAgencies } from "../controllers/AgencyController.js";
@@ -16,6 +17,7 @@ const router = express.Router();
 
 // Public Report Routes
 router.get("/reports", getReports); // Mendapatkan daftar aduan dengan filter dasar
+router.get("/reports/search", searchPublicReports); // Search public reports - add this line
 router.get("/reports/category/:categoryId", getReportsByCategory); // Mendapatkan aduan berdasarkan kategori
 router.get("/reports/status/:status", getPublicReportsByStatus); // Melihat aduan berdasarkan status
 router.get("/reports/:id", getReportsById); // Melihat detail aduan spesifik

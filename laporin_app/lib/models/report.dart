@@ -148,3 +148,45 @@ class DetailedReport extends Report {
     );
   }
 }
+
+class PublicReport {
+  final int id;
+  final String title;
+  final String description;
+  final String location;
+  final String status;
+  final DateTime? createdAt;
+  final int categoryId;
+  final ReportCategory? category;
+  final String? imageUrl;
+
+  PublicReport({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.location,
+    required this.status,
+    this.createdAt,
+    required this.categoryId,
+    this.category,
+    this.imageUrl,
+  });
+
+  factory PublicReport.fromJson(Map<String, dynamic> json) {
+    return PublicReport(
+      id: json['id'] as int,
+      title: json['title'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      location: json['location'] as String? ?? '',
+      status: json['status'] as String? ?? 'pending',
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      categoryId: json['category_id'] as int? ?? 0,
+      category:
+          json['report_category'] != null
+              ? ReportCategory.fromJson(json['report_category'])
+              : null,
+      imageUrl: json['image_url'] as String?,
+    );
+  }
+}
