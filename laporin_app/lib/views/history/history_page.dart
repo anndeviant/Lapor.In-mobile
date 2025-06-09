@@ -565,7 +565,7 @@ class _HistoryPageState extends State<HistoryPage> {
     switch (status.toLowerCase()) {
       case 'pending':
         return {
-          'text': 'Menunggu',
+          'text': 'Pending',
           'color': Colors.grey.shade700,
           'icon': Icons.hourglass_empty,
         };
@@ -577,7 +577,7 @@ class _HistoryPageState extends State<HistoryPage> {
         };
       case 'in_progress':
         return {
-          'text': 'Diproses',
+          'text': 'Sedang Diproses',
           'color': Colors.orange.shade700,
           'icon': Icons.sync,
         };

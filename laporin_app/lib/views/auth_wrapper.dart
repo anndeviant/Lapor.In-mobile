@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../services/auth_service.dart';
 import '../services/connectivity_service.dart';
+import '../services/notification_service.dart';
 import 'widgets/connection_popup.dart';
 import 'auth/landing_page.dart';
 import 'navigation.dart';
@@ -74,11 +75,19 @@ class _AuthWrapperState extends State<AuthWrapper> {
         _isLoggedIn = isLoggedIn;
         _isLoading = false;
       });
+
+      // Start or stop notification service based on login status
+      if (isLoggedIn) {
+        await NotificationService.startStatusPolling();
+      } else {
+        NotificationService.stopStatusPolling();
+      }
     } catch (e) {
       setState(() {
         _isLoggedIn = false;
         _isLoading = false;
       });
+      NotificationService.stopStatusPolling();
     }
   }
 

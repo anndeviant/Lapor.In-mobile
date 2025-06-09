@@ -635,19 +635,19 @@ class _HomePageState extends State<HomePage> {
         };
       case 'verified':
         return {
-          'text': 'Verified',
+          'text': 'Terverifikasi',
           'color': Colors.blue.shade600,
           'icon': Icons.verified,
         };
       case 'in_progress':
         return {
-          'text': 'In Progress',
+          'text': 'Sedang Diproses',
           'color': Colors.orange.shade600,
           'icon': Icons.sync,
         };
       case 'resolved':
         return {
-          'text': 'Resolved',
+          'text': 'Selesai',
           'color': Colors.green.shade600,
           'icon': Icons.check_circle,
         };
@@ -867,27 +867,31 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Status Breakdown',
+          'Statistik Status',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.grey.shade800,
           ),
         ),
-        const SizedBox(height: 8),
-        Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
+        const SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade200.withValues(alpha: 0.5),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children:
-                  _statistics!.statuses.map((status) {
-                    return _buildStatusItem(status);
-                  }).toList(),
-            ),
+          child: Column(
+            children:
+                _statistics!.statuses.map((status) {
+                  return _buildStatusItem(status);
+                }).toList(),
           ),
         ),
       ],
@@ -897,41 +901,85 @@ class _HomePageState extends State<HomePage> {
   Widget _buildStatusItem(StatusStat status) {
     // Define colors for each status
     final statusColors = {
-      'pending': Colors.grey,
-      'verified': Colors.blue,
-      'in_progress': Colors.orange,
-      'resolved': Colors.green,
-      'rejected': Colors.red,
+      'pending': Colors.grey.shade600,
+      'verified': Colors.blue.shade600,
+      'in_progress': Colors.orange.shade600,
+      'resolved': Colors.green.shade600,
+      'rejected': Colors.red.shade600,
     };
 
-    final color = statusColors[status.status] ?? Colors.grey;
+    final statusIcons = {
+      'pending': Icons.hourglass_empty,
+      'verified': Icons.verified,
+      'in_progress': Icons.sync,
+      'resolved': Icons.check_circle,
+      'rejected': Icons.cancel,
+    };
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        children: [
-          Container(
-            width: 12,
-            height: 12,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            _capitalizeStatus(status.status),
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Colors.grey.shade700,
+    final color =
+        statusColors[status.status.toLowerCase()] ?? Colors.grey.shade600;
+    final icon = statusIcons[status.status.toLowerCase()] ?? Icons.help_outline;
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.grey.shade100, width: 1.5),
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () {}, // Could navigate to filtered list in the future
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 14.0,
+              vertical: 10.0,
+            ),
+            child: Row(
+              children: [
+                // Smaller icon container
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, color: color, size: 14),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  _capitalizeStatus(status.status),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey.shade700,
+                    fontSize: 13,
+                  ),
+                ),
+                const Spacer(),
+                // Smaller count badge
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  // decoration: BoxDecoration(
+                  //   color: color.withValues(alpha: 0.1),
+                  //   borderRadius: BorderRadius.circular(10),
+                  // ),
+                  child: Text(
+                    status.count.toString(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: color,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          const Spacer(),
-          Text(
-            status.count.toString(),
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey.shade800,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -952,20 +1000,24 @@ class _HomePageState extends State<HomePage> {
             color: Colors.grey.shade800,
           ),
         ),
-        const SizedBox(height: 8),
-        Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
+        const SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade200.withValues(alpha: 0.5),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children:
-                  _statistics!.categories.map((category) {
-                    return _buildCategoryItem(category);
-                  }).toList(),
-            ),
+          child: Column(
+            children:
+                _statistics!.categories.map((category) {
+                  return _buildCategoryItem(category);
+                }).toList(),
           ),
         ),
       ],
@@ -973,29 +1025,70 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCategoryItem(CategoryStat category) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        children: [
-          Icon(Icons.category, color: Colors.blue.shade700, size: 16),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              category.categoryName,
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Colors.grey.shade700,
-              ),
+    // Use a consistent blue color for all categories
+    final color = Colors.blue.shade700;
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.grey.shade100, width: 1.5),
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () {}, // Could navigate to filtered list in the future
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 14.0,
+              vertical: 10.0,
+            ),
+            child: Row(
+              children: [
+                // Smaller icon container
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade50,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(Icons.category, color: color, size: 14),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    category.categoryName,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey.shade700,
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+                // Smaller count badge with consistent blue color
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  // decoration: BoxDecoration(
+                  //   color: Colors.blue.shade50,
+                  //   borderRadius: BorderRadius.circular(10),
+                  // ),
+                  child: Text(
+                    category.count.toString(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: color,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          Text(
-            category.count.toString(),
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey.shade800,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
