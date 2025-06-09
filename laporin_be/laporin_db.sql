@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2025 at 04:16 PM
+-- Generation Time: Jun 09, 2025 at 06:52 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -149,7 +149,22 @@ INSERT INTO `reports` (`id`, `title`, `description`, `category_id`, `reporter_na
 (27, 'Plang Nama Rusak', 'Plang nama desa roboh karena angin.', 8, 'Tari Nirmala', '087812345678', 'pending', 'Gerbang Utama', 'uploads/plang.jpg', NULL, NULL, NULL, '2025-05-23 21:16:10', '2025-05-23 21:16:10'),
 (28, 'Embung Tidak Terawat', 'Tanaman liar tumbuh di dasar embung, mengganggu aliran air.', 9, 'Samsul Arifin', '085711223344', 'verified', 'Embung Blok Selatan', 'uploads/embung.jpg', NULL, 4, 2, '2025-05-23 21:16:10', '2025-05-23 21:16:10'),
 (29, 'Ayunan di Taman Rusak', 'Tali ayunan di taman bermain putus dan membahayakan anak.', 10, 'Alifah Nurani', '083344556678', 'resolved', 'Taman Ceria', 'uploads/ayunan.jpg', 'uploads/surat_kerusakan.pdf', 3, 1, '2025-05-23 21:16:10', '2025-05-23 21:16:10'),
-(30, 'Bayi Gizi Buruk', 'Ditemukan bayi dengan berat badan jauh di bawah normal.', 20, 'Rizka Nuraini', '082300456789', 'verified', 'Posyandu Melati', 'uploads/bayi.jpg', 'uploads/kartu_gizi.jpg', 5, 2, '2025-05-23 21:16:10', '2025-05-23 21:16:10');
+(30, 'Bayi Gizi Buruk', 'Ditemukan bayi dengan berat badan jauh di bawah normal.', 20, 'Rizka Nuraini', '082300456789', 'verified', 'Posyandu Melati', 'uploads/bayi.jpg', 'uploads/kartu_gizi.jpg', 5, 2, '2025-05-23 21:16:10', '2025-05-23 21:16:10'),
+(31, 'gegee', 'gege', 7, '333', '333', 'pending', 'Georgia Ave Petworth Station, District of Freedom#8573311~!#, Washington, DC 20036, Amerika Serikat', 'https://storage.googleapis.com/laporin_app/images/1749216761973_scaled_682c82bf3fe8d39283664def.jpg', NULL, 5, NULL, '2025-06-06 20:32:42', '2025-06-06 20:32:42'),
+(32, 'asds', 'asd', 3, '333', '333', 'resolved', 'asd', 'https://storage.googleapis.com/laporin_app/images/1749219688450_scaled_682c82bf3fe8d39283664def.jpg', NULL, 3, NULL, '2025-06-06 21:21:29', '2025-06-06 21:21:29'),
+(33, 'ANJAY', 'jago ngeprompt', 2, '333', '333', 'rejected', 'Georgia Ave Petworth Station, District of Freedom#8573311~!#, Washington, DC 20036, Amerika Serikat', 'https://storage.googleapis.com/laporin_app/images/1749220736597_scaled_682c82bf3fe8d39283664def.jpg', NULL, 1, NULL, '2025-02-12 21:38:56', '2025-06-06 21:38:56'),
+(34, 'asds', '123', 3, '333', '333', 'verified', 'asd', 'https://storage.googleapis.com/laporin_app/images/1749220846157_scaled_682c82bf3fe8d39283664def.jpg', NULL, 2, NULL, '2025-06-06 21:40:46', '2025-06-06 21:40:46'),
+(35, 'io', 'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd', 3, '333', '333', 'in_progress', '66Q6+C5H, Nanggulan, Jati Sarono, Kec. Nanggulan, Kabupaten Kulon Progo, Daerah Istimewa Yogyakarta 55671, Indonesia', 'https://storage.googleapis.com/laporin_app/images/1749223300525_scaled_682c82bf3fe8d39283664def.jpg', NULL, 2, NULL, '2025-06-06 22:21:40', '2025-06-06 22:21:40'),
+(36, 'Jalan Jebol', 'ditengah tengah mataram janti', 1, '333', '333', 'pending', '69RW+65P, Jl. Affandi, Gejayan, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta, Indonesia', 'https://storage.googleapis.com/laporin_app/images/1749269479322_scaled_682c82bf3fe8d39283664def.jpg', NULL, 9, NULL, '2025-06-07 04:11:19', '2025-06-07 04:11:19'),
+(37, 'jjj', 'jjj', 2, '333', '333', 'pending', 'jj', 'https://storage.googleapis.com/laporin_app/images/1749270465837_scaled_682c82bf3fe8d39283664def.jpg', NULL, 3, NULL, '2025-06-07 04:27:46', '2025-06-07 04:27:46'),
+(38, 'rt', 'rt', 3, '333', '333', 'pending', 'rt', 'https://storage.googleapis.com/laporin_app/images/1749270531794_scaled_682c82bf3fe8d39283664def.jpg', NULL, 2, NULL, '2025-06-07 04:28:52', '2025-06-07 04:28:52'),
+(39, 'sd', 'sd', 2, 'Nao Tomori', '123', 'pending', 'sd', 'https://storage.googleapis.com/laporin_app/images/1749275559937_scaled_682c82bf3fe8d39283664def.jpg', NULL, 3, NULL, '2025-06-07 05:52:40', '2025-06-07 05:52:40'),
+(40, 'kimidayo', 'naminami', 2, '333', '333', 'pending', '6CP5+RV5, Ngropoh, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281, Indonesia', 'https://storage.googleapis.com/laporin_app/images/1749312079434_scaled_682c82bf3fe8d39283664def.jpg', NULL, 3, NULL, '2025-06-07 16:01:19', '2025-06-07 16:01:19'),
+(41, 'asd', 'asd', 3, '333', '333', 'pending', 'asd', 'https://storage.googleapis.com/laporin_app/images/1749393624874_scaled_682c82bf3fe8d39283664def.jpg', NULL, 3, NULL, '2025-06-08 14:40:25', '2025-06-08 14:40:25'),
+(42, 'ds', 'asds', 3, '333', '333', 'verified', 'asd', 'https://storage.googleapis.com/laporin_app/images/1749395257628_scaled_682c82bf3fe8d39283664def.jpg', NULL, 3, NULL, '2025-06-08 15:07:37', '2025-06-08 15:07:37'),
+(43, 'gelok', 'asd', 2, '333', '333', 'resolved', 'asd', 'https://storage.googleapis.com/laporin_app/images/1749395384796_scaled_682c82bf3fe8d39283664def.jpg', NULL, 4, NULL, '2025-06-08 15:09:45', '2025-06-08 15:09:45'),
+(44, 'Lyan', 'lyan', 3, '333', '333', 'resolved', 'Lapangan Rektorat Universitas Pembangunan Nasional Veteran Yogyakarta, Jl. Padjajaran Jl. Ring Road Utara No.1, Ngropoh, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281, Indonesia', 'https://storage.googleapis.com/laporin_app/images/1749401989751_scaled_682c82bf3fe8d39283664def.jpg', NULL, 4, NULL, '2025-06-08 16:59:50', '2025-06-08 16:59:50'),
+(45, 'asd', 'asd', 3, 'Lyan', '098', 'pending', '6CQ5+4P2, Ngropoh, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281, Indonesia', 'https://storage.googleapis.com/laporin_app/images/1749441333402_scaled_682c82bf3fe8d39283664def.jpg', NULL, 3, NULL, '2025-06-09 03:55:34', '2025-06-09 03:55:34');
 
 -- --------------------------------------------------------
 
@@ -179,7 +194,7 @@ INSERT INTO `report_categories` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 (8, 'Jalan Berlubang', '2025-05-21 11:11:44', '2025-05-21 11:11:44'),
 (9, 'Sampah Menumpuk', '2025-05-21 11:11:44', '2025-05-21 11:11:44'),
 (10, 'Longsor', '2025-05-21 11:11:44', '2025-05-21 11:11:44'),
-(11, 'Pemasangan Kabel Tidak Aman', '2025-05-21 11:11:44', '2025-05-21 11:11:44'),
+(11, 'Resiko Pemasangan Kabel', '2025-05-21 11:11:44', '2025-05-21 11:11:44'),
 (12, 'Fasilitas Publik Rusak', '2025-05-21 11:11:44', '2025-05-21 11:11:44'),
 (13, 'Rambu Lalu Lintas Rusak', '2025-05-21 11:11:44', '2025-05-21 11:11:44'),
 (14, 'Median Jalan Rusak', '2025-05-21 11:11:44', '2025-05-21 11:11:44'),
@@ -205,6 +220,36 @@ CREATE TABLE `report_histories` (
   `admin_id` int(11) DEFAULT NULL,
   `timestamp` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `phone_number` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `device_info` varchar(255) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `fullname`, `phone_number`, `password`, `device_info`, `is_active`, `createdAt`, `updatedAt`) VALUES
+(1, 'Dewi Anggraini', '081234567890', '$2b$10$2OqNkex5NoA9xyOio9ZFZOymdu93jWbfZWz.2aXDBMhXMAnJHhGZS', NULL, 1, '2025-06-03 11:58:56', '2025-06-03 11:58:56'),
+(2, '123123', '123123', '$2b$10$B8t.oy3jmAxArjMNaanKCOOBuOr/tZhmY92lormb5SdNmmaQQ0Jq.', NULL, 1, '2025-06-03 12:32:05', '2025-06-03 12:34:47'),
+(3, 'qweqwe', '312312', '$2b$10$dZMjzuzThC1MLIaz3AQTUe2MTe1GqeSFCU83ibDjP2sdTlOJAzWIy', NULL, 1, '2025-06-03 21:09:30', '2025-06-03 21:09:30'),
+(4, '333', '333', '$2b$10$V/aHUaTgF0SejCYxIRfNdugLi9ogTNiI2w3HqMjQPripfCq0Q0e2i', NULL, 1, '2025-06-03 21:10:08', '2025-06-09 03:59:53'),
+(5, 'Annas Sovianto', '098098', '$2b$10$at8nn7/2n0lg1VQjXL1LZ.m4o.7aY5.8csrrPjEOEdIQ4Ge8iGOKG', NULL, 1, '2025-06-05 10:29:07', '2025-06-05 10:29:46'),
+(6, 'Nao Tomori', '123', '$2b$10$I.qNI.bEqAVyHXL0DKyGb.9BF7FpCv1IHzRkbQPfZjIIA2zZV4QMm', 'Xiaomi_2210132C_PQ3A.190605.03202111', 1, '2025-06-07 05:49:19', '2025-06-07 05:49:28'),
+(7, 'Lyan', '098', '$2b$10$C.67XccmnVXVZVchm2T3qu62GYZezb3gjMrOUWQR/rUBXfwrP11Fa', 'Xiaomi_2210132C_PQ3A.190605.03202111', 1, '2025-06-08 17:01:32', '2025-06-09 03:59:59');
 
 --
 -- Indexes for dumped tables
@@ -249,6 +294,13 @@ ALTER TABLE `report_histories`
   ADD KEY `admin_id` (`admin_id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `phone_number` (`phone_number`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -268,7 +320,7 @@ ALTER TABLE `government_agencies`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `report_categories`
@@ -281,6 +333,12 @@ ALTER TABLE `report_categories`
 --
 ALTER TABLE `report_histories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
