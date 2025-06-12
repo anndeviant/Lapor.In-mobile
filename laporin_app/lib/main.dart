@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'models/user_credit.dart';
 import 'models/notification.dart';
+import 'models/user_profile.dart';
 import 'utils/hive_box.dart';
 import 'services/currency_service.dart';
 import 'services/notification_service.dart';
@@ -10,14 +11,15 @@ import 'views/auth_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   // Initialize Hive
   await Hive.initFlutter();
   Hive.registerAdapter(UserCreditAdapter());
   Hive.registerAdapter(AppNotificationAdapter());
+  Hive.registerAdapter(UserProfileAdapter());
   await Hive.openBox<UserCredit>(HiveBox.userCredits);
   await Hive.openBox<AppNotification>(HiveBox.notifications);
   await Hive.openBox<Map>(HiveBox.reportStatuses);
+  await Hive.openBox<UserProfile>(HiveBox.userProfiles);
 
   // Initialize currency exchange rates
   await CurrencyService.updateExchangeRates();
