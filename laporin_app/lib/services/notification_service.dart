@@ -67,7 +67,7 @@ class NotificationService {
     await _checkForStatusChanges();
 
     // Start periodic polling every 10 minutes
-    _pollingTimer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+    _pollingTimer = Timer.periodic(const Duration(seconds: 60), (timer) async {
       await _checkForStatusChanges();
     });
   }

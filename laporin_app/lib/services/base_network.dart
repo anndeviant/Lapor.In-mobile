@@ -4,9 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 class BaseNetwork {
-  // static const String _baseUrl =
-  //     'https://laporin-mobile-298647753913.us-central1.run.app';
-  static const String _baseUrl = 'http://192.168.0.102:5000';
+  static const String _baseUrl =
+      'https://laporin-mobile-298647753913.us-central1.run.app';
+  // static const String _baseUrl = 'http://192.168.0.102:5000';
   static final Logger _logger = Logger();
 
   static Future<Map<String, dynamic>> post(

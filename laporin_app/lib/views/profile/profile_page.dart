@@ -330,6 +330,49 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  Widget _buildKesanPesanCard() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.07),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              'Kesan & Pesan',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Divider(height: 24),
+            Text('Kesan:', style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 4),
+            Text(
+              'Semester 6 ini sangat menantang, terutama dengan adanya laporan yang cukup menyita waktu. Tapi memorable sih, apalagi saat presentasi sewaktu ada beberapa kesalahan konyol yang justru menjadi pembelajaran dan kenangan tersendiri.',
+              style: TextStyle(fontSize: 14),
+            ),
+            SizedBox(height: 16),
+            Text('Pesan:', style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 4),
+            Text(
+              'Semua sudah bagus, mengasah logic juga dan membuat mahasiswa bisa menyetting kebutuhan aplikasi mobile secara keseluruhan sampai sensor hp. alangkah baiknya jika setiap tugas dapat dirancang lebih realistis, menyesuaikan kebutuhan industri, baik dari sisi konsep maupun alur fitur. Dengan demikian, mahasiswa dapat lebih memahami tantangan nyata dan tidak terkesan dipaksakan untuk menggunakan fitur tertentu. Semoga ke depannya tugas-tugas dapat lebih fleksibel dan relevan dengan dunia kerja.',
+              style: TextStyle(fontSize: 14),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -361,6 +404,8 @@ class _ProfilePageState extends State<ProfilePage> {
           _buildProfileHeaderCard(),
           const SizedBox(height: 16),
           _buildProfileInfoCard(),
+          const SizedBox(height: 16),
+          _buildKesanPesanCard(),
           const SizedBox(height: 16),
           _buildActionButtons(),
         ],
